@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuri点点的魔法相册 ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">🌸</span>
+            <span class="logo-text">Yuri点点的相册</span>
+            <span class="logo-icon">✨</span>
+        </div>
+        <nav class="nav">
+            <button class="nav-btn active" data-view="gallery">
+                <span>🏠</span> 首页
+            </button>
+            <button class="nav-btn" data-view="upload">
+                <span>📸</span> 上传照片
+            </button>
+            <button class="nav-btn" data-view="favorites">
+                <span>💖</span> 我的收藏
+            </button>
+        </nav>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="main">
+        <!-- 欢迎区域 -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="sparkle">✨</span>
+                    欢迎来到Yuri的魔法世界
+                    <span class="sparkle">✨</span>
+                </h1>
+                <p class="hero-subtitle">记录每一个美好的瞬间 💕</p>
+            </div>
+            <div class="floating-icons">
+                <span class="float-icon">🌸</span>
+                <span class="float-icon">🎀</span>
+                <span class="float-icon">⭐</span>
+                <span class="float-icon">🌙</span>
+                <span class="float-icon">💫</span>
+            </div>
+        </section>
+
+        <!-- 分类标签 -->
+        <section class="categories">
+            <button class="cat-btn active" data-category="all">
+                <span class="cat-icon">🌈</span>
+                <span class="cat-text">全部</span>
+            </button>
+            <button class="cat-btn" data-category="family">
+                <span class="cat-icon">👨‍👩‍👧</span>
+                <span class="cat-text">家人</span>
+            </button>
+            <button class="cat-btn" data-category="travel">
+                <span class="cat-icon">✈️</span>
+                <span class="cat-text">旅行</span>
+            </button>
+            <button class="cat-btn" data-category="food">
+                <span class="cat-icon">🍰</span>
+                <span class="cat-text">美食</span>
+            </button>
+            <button class="cat-btn" data-category="pets">
+                <span class="cat-icon">🐱</span>
+                <span class="cat-text">萌宠</span>
+            </button>
+            <button class="cat-btn" data-category="daily">
+                <span class="cat-icon">🌸</span>
+                <span class="cat-text">日常</span>
+            </button>
+        </section>
+
+        <!-- 上传区域 -->
+        <section class="upload-section" id="uploadSection" style="display: none;">
+            <div class="upload-card">
+                <div class="upload-area" id="dropZone">
+                    <div class="upload-icon">📸</div>
+                    <h3 class="upload-title">拖拽照片到这里</h3>
+                    <p class="upload-text">或者点击选择照片</p>
+                    <input type="file" id="fileInput" accept="image/*" multiple hidden>
+                    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                        <span>✨</span> 选择照片
+                    </button>
+                </div>
+                
+                <div class="upload-form">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span>📝</span> 照片标题
+                        </label>
+                        <input type="text" id="photoTitle" class="form-input" placeholder="给照片起个可爱的名字~">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span>🏷️</span> 选择分类
+                        </label>
+                        <select id="photoCategory" class="form-select">
+                            <option value="family">👨‍👩‍👧 家人</option>
+                            <option value="travel">✈️ 旅行</option>
+                            <option value="food">🍰 美食</option>
+                            <option value="pets">🐱 萌宠</option>
+                            <option value="daily">🌸 日常</option>
+                        </select>
+                    </div>
+                    <button class="submit-btn" id="submitBtn">
+                        <span>🚀</span> 上传到魔法相册
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 照片画廊 -->
+        <section class="gallery" id="gallery">
+            <div class="gallery-header">
+                <h2 class="gallery-title">
+                    <span>🎀</span> 我的照片
+                    <span class="photo-count" id="photoCount">(0张)</span>
+                </h2>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-layout="masonry">
+                        <span>⊞</span> 瀑布流
+                    </button>
+                    <button class="view-btn" data-layout="grid">
+                        <span>⊟</span> 网格
+                    </button>
+                </div>
+            </div>
+            <div class="photo-grid masonry" id="photoGrid">
+                <!-- 照片会动态插入这里 -->
+            </div>
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">📷</div>
+                <h3 class="empty-title">还没有照片呢</h3>
+                <p class="empty-text">快去上传第一张照片吧~</p>
+                <button class="empty-btn" onclick="showUpload()">
+                    <span>✨</span> 上传照片
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 照片查看器 -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">✕</button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+        <div class="lightbox-content">
+            <img class="lightbox-img" id="lightboxImg" src="" alt="">
+            <div class="lightbox-info">
+                <h3 class="lightbox-title" id="lightboxTitle"></h3>
+                <span class="lightbox-category" id="lightboxCategory"></span>
+                <p class="lightbox-date" id="lightboxDate"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                <span>🌸</span> Made with love for Yuri点点 <span>🌸</span>
+            </p>
+            <p class="footer-sub">阳仔出品，必属精品 */ᐠ｡ꞈ｡ᐟ*</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
