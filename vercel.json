@@ -1,16 +1,4 @@
 {
   "version": 2,
-  "name": "yuri-photo-gallery",
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ]
+  "name": "yuri-photo-gallery"
 }
